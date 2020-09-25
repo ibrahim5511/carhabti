@@ -44,7 +44,6 @@ const OnBoardStack = createStackNavigator(
 const AuthStack = createStackNavigator(
   {
     LoginSignUp: {screen: LoginSignUp},
-    MyCar: {screen: MyCar,}
   },
   {
     defaultNavigationOptions: {
@@ -54,20 +53,11 @@ const AuthStack = createStackNavigator(
   },
 );
 
-const BotStack = createStackNavigator(
-  {
-    MrBot: {screen: MrBot},
-  },
-  {
-    defaultNavigationOptions: {
-      headerShown: false,
-    },
-    initialRouteName: 'MrBot',
-  },
-);
 
 
-const AppStack = createBottomTabNavigator(
+
+
+const BottomNavigatorStack = createBottomTabNavigator(
   {
     'Ma Voiture': {
       screen: Home,
@@ -116,6 +106,20 @@ const AppStack = createBottomTabNavigator(
         backgroundColor: '#3E3E3E', // TabBar background
       },
     },
+  },
+);
+
+const AppStack = createStackNavigator(
+  {
+    MrBot: {screen: MrBot},
+    MyCar: {screen: MyCar},
+    BottomNavigator: {screen: BottomNavigatorStack},
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+    initialRouteName: 'BottomNavigator',
   },
 );
 
