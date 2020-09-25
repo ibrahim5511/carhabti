@@ -21,6 +21,10 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import OnBoard from './src/containers/onBoard';
 import LoginSignUp from './src/containers/loginSignUp';
 import Home from './src/containers/home';
+import News from './src/containers/news';
+import Offres from './src/containers/offres';
+import MrBot from './src/containers/mrBot';
+import MyCar from './src/containers/myCar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -40,12 +44,25 @@ const OnBoardStack = createStackNavigator(
 const AuthStack = createStackNavigator(
   {
     LoginSignUp: {screen: LoginSignUp},
+    MyCar: {screen: MyCar,}
   },
   {
     defaultNavigationOptions: {
       headerShown: false,
     },
     initialRouteName: 'LoginSignUp',
+  },
+);
+
+const BotStack = createStackNavigator(
+  {
+    MrBot: {screen: MrBot},
+  },
+  {
+    defaultNavigationOptions: {
+      headerShown: false,
+    },
+    initialRouteName: 'MrBot',
   },
 );
 
@@ -61,7 +78,7 @@ const AppStack = createBottomTabNavigator(
         }),
     },
     Blog: {
-      screen: Home,
+      screen: News,
       navigationOptions: () => ({
         tabBarIcon: ({tintColor}) => (
           <Image style={{ width: width * 0.1, height: width * 0.1, resizeMode: 'contain',  }} source={require('./assets/images/blog.png')} />
@@ -69,7 +86,7 @@ const AppStack = createBottomTabNavigator(
       }),
     },
     Offres: {
-      screen: Home,
+      screen: Offres,
       navigationOptions: () => ({
         tabBarIcon: ({tintColor}) => (
           <Image style={{ width: width * 0.1, height: width * 0.1, resizeMode: 'contain', }} source={require('./assets/images/offresIcon.png')} />
@@ -108,6 +125,7 @@ const AppContainer = createAppContainer(
       OnBoard: OnBoardStack,
       Auth: AuthStack,
       App: AppStack,
+      //Bot: BotStack,
     },
     {
       initialRouteName: 'OnBoard',

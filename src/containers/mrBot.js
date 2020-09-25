@@ -17,55 +17,36 @@ import {
   TouchableOpacity, 
   ScrollView,
   FlatList,
-  Alert,
 } from 'react-native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-class Home extends Component{
+class MrBot extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      history: [{id: '0', date: 'Mar / 2020', service: 'Pneus'}, {id: '0', date: 'Jan / 2020', service: 'Moteur'}, {id: '0', date: 'Dec / 2019', service: 'Vidange'}],
-      cars: [
-        {id: '0', name: 'audi', image: require('../../assets/images/renaultView.png'), name: 'Audi RS7', model: 'Sportback 2020'}, 
-        {id: '1', name: 'renault', image: require('../../assets/images/audiView.png'), name: 'Audi RS7', model: 'Sportback 2020'}, 
-        {id: '2', name: 'audi', image:require('../../assets/images/renaultView.png'), name: 'Audi RS7', model: 'Sportback 2020'}
-      ],
+      history: [{id: '0', date: 'Mar / 2020', service: 'Pneus'}, {id: '0', date: 'Jan / 2020', service: 'Moteur'}, {id: '0', date: 'Dec / 2019', service: 'Vidange'}]
     };
   }
   render(){
-    const {history, cars} = this.state;
+    const {history} = this.state;
     return(
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <Image style={{ width: width * 0.2, height: width * 0.2, resizeMode: 'contain', position: 'absolute', left: width * 0.03 }} source={require('../../assets/images/slogan.png')}/>
           <Text style={{ textAlign: 'center', width: width, color: '#9E9E9E', fontFamily: 'Barlow-Regular', }}>ACCUEIL</Text>
-          <TouchableOpacity style={{  position: 'absolute', right: width * 0.03, }} onPress={()=> this.props.navigation.navigate('MrBot')}>
-            <Image style={{ width: width * 0.07, height: width * 0.07, resizeMode: 'contain' }} source={require('../../assets/images/botHeader.png')}/>
-          </TouchableOpacity>
+          <Image style={{ width: width * 0.07, height: width * 0.07, position: 'absolute', right: width * 0.03, resizeMode: 'contain' }} source={require('../../assets/images/botHeader.png')}/>
         </View>
         <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.1 }}>Ma Voiture</Text>
-        {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: width * 0.03 }}>
+        <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: width * 0.03 }}>
           <TouchableOpacity>
             <Image style={{ width: width * 0.35, height: width * 0.35, resizeMode: 'contain' }} source={require('../../assets/images/audiView.png')}/>
           </TouchableOpacity>
           <TouchableOpacity>
             <Image style={{ width: width * 0.35, height: width * 0.35,resizeMode: 'contain', marginLeft: width * 0.04 }} source={require('../../assets/images/renaultView.png')}/>
           </TouchableOpacity>
-        </View> */}
-        <FlatList
-          style={{ alignSelf: 'center' }}
-          data={cars}
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index}) => (
-            <TouchableOpacity onPress={()=> this.props.navigation.navigate('MyCar', item )}>
-              <Image style={{ width: width * 0.35, height: width * 0.35,resizeMode: 'contain', marginLeft: width * 0.04 }} source={item.image}/>
-            </TouchableOpacity>
-          )}
-        />
+        </View>
         <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.1 }}>STATUT DE VEHICULE</Text>
         <ScrollView showsHorizontalScrollIndicator={false} style={{ marginTop: width * 0.04 }} horizontal={true}>
         {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: width * 0.03 }}> */}
@@ -172,4 +153,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default MrBot;
