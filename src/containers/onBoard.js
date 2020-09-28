@@ -27,6 +27,7 @@ class OnBoard extends Component{
     return(
       <Swiper 
         style={styles.wrapper} 
+        loop={false}
         paginationStyle={{ paddingBottom: width * 0.03 }}
         dotStyle={{ backgroundColor: 'white', width: width * 0.02, height:width * 0.02, borderRadius: width * 0.02, opacity: 0.3 }}
         activeDotStyle={{ backgroundColor: 'white', width: width * 0.02, height:width * 0.02, borderRadius: width * 0.02 }}

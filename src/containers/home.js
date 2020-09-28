@@ -19,6 +19,7 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
+import BottomBar from '../components/bottomBar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -36,102 +37,105 @@ class Home extends Component{
     };
   }
   render(){
-    const {history, cars} = this.state;
+    const {history, cars, showModal} = this.state;
     return(
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Image style={{ width: width * 0.2, height: width * 0.2, resizeMode: 'contain', position: 'absolute', left: width * 0.03 }} source={require('../../assets/images/slogan.png')}/>
-          <Text style={{ textAlign: 'center', width: width, color: '#9E9E9E', fontFamily: 'Barlow-Regular', }}>ACCUEIL</Text>
-          <TouchableOpacity style={{  position: 'absolute', right: width * 0.03, }} onPress={()=> this.props.navigation.navigate('MrBot')}>
-            <Image style={{ width: width * 0.07, height: width * 0.07, resizeMode: 'contain' }} source={require('../../assets/images/botHeader.png')}/>
-          </TouchableOpacity>
-        </View>
-        <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.1 }}>Ma Voiture</Text>
-        {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: width * 0.03 }}>
-          <TouchableOpacity>
-            <Image style={{ width: width * 0.35, height: width * 0.35, resizeMode: 'contain' }} source={require('../../assets/images/audiView.png')}/>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image style={{ width: width * 0.35, height: width * 0.35,resizeMode: 'contain', marginLeft: width * 0.04 }} source={require('../../assets/images/renaultView.png')}/>
-          </TouchableOpacity>
-        </View> */}
-        <FlatList
-          style={{ alignSelf: 'center' }}
-          data={cars}
-          numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index}) => (
-            <TouchableOpacity onPress={()=> this.props.navigation.navigate('MyCar', item )}>
-              <Image style={{ width: width * 0.35, height: width * 0.35,resizeMode: 'contain', marginLeft: width * 0.04 }} source={item.image}/>
+      <SafeAreaView style={{ flex:1,}}>
+        <ScrollView style={styles.container}>
+          <View style={styles.header}>
+            <Image style={{ width: width * 0.15, height: width * 0.1, resizeMode: 'contain', position: 'absolute', left: width * 0.03 }} source={require('../../assets/images/slogan.png')}/>
+            <Text style={{ textAlign: 'center', width: width, color: '#9E9E9E', fontFamily: 'Barlow-Regular', }}>ACCUEIL</Text>
+            <TouchableOpacity style={{  position: 'absolute', right: width * 0.03, }} onPress={()=> this.props.navigation.navigate('MrBot')}>
+              <Image style={{ width: width * 0.07, height: width * 0.07, resizeMode: 'contain' }} source={require('../../assets/images/botHeader.png')}/>
             </TouchableOpacity>
-          )}
-        />
-        <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.1 }}>STATUT DE VEHICULE</Text>
-        <ScrollView showsHorizontalScrollIndicator={false} style={{ marginTop: width * 0.04 }} horizontal={true}>
-        {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: width * 0.03 }}> */}
-          <View style={styles.function}>
-            <Text style={{ fontFamily: 'Barlow-Regular', color: '#FFC000', fontSize: width * 0.04, marginTop: width * 0.03 }}>Moteur</Text>
-            <Image style={{ width: width * 0.15, height: width * 0.15, resizeMode: 'contain' }} source={require('../../assets/images/moteur.png')}/>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ width: '40%', height: 3, borderRadius: width * 0.05, backgroundColor: '#FFC000',  }}></View>
-              <View style={{ width: '20%', height: 3, borderRadius: width * 0.05, backgroundColor: 'white',  }}></View>
-            </View>
-            <Text style={{ color: '#FFC000', fontFamily: 'Barlow-Regular' }}>2/5</Text>
           </View>
-          <View style={styles.function}>
-            <Text style={{ fontFamily: 'Barlow-Regular', color: 'white', fontSize: width * 0.04, marginTop: width * 0.03 }}>Pneus</Text>  
-            <Image style={{ width: width * 0.15, height: width * 0.15,resizeMode: 'contain', }} source={require('../../assets/images/pneus.png')}/>
-          </View>
-          <View style={styles.function}>
-            <Text style={{ fontFamily: 'Barlow-Regular', color: 'white', fontSize: width * 0.04, marginTop: width * 0.03 }}>Huile</Text>  
-            <Image style={{ width: width * 0.15, height: width * 0.15,resizeMode: 'contain', }} source={require('../../assets/images/huile.png')}/>
-          </View>
-        </ScrollView>
-        <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: 'white', marginTop: width * 0.06 }}>TRACKING DU MAINTENANCE</Text>  
-        <View style={{ marginVertical: width * 0.03, backgroundColor: '', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <View style={{ width: '100%', backgroundColor: 'white', height: width * 0.025, position: 'absolute', zIndex: -1, top: width * 0.1 }}></View>
-          <View style={[styles.statusContainer,{alignItems: 'flex-start'}]}>
-            <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/receivedCar.png')}/>
-            <Image style={styles.status} source={require('../../assets/images/taskComplete.png')}/>
-            <Text style={[styles.trackItemText,{color: '#FFC000'}]}>Voiture Reçu</Text>
-          </View>
-          <View style={styles.statusContainer}>
-            <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/tire.png')}/>
-            <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
-            <Text style={styles.trackItemText}>Pneus</Text>
-          </View>
-          <View style={styles.statusContainer}>
-            <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/vidange.png')}/>
-            <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
-            <Text style={styles.trackItemText}>Vidange</Text>
-          </View>
-          <View style={styles.statusContainer}>
-            <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/lavage.png')}/>
-            <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
-            <Text style={styles.trackItemText}>Lavage</Text>
-          </View>
-          <View style={[styles.statusContainer,{alignItems: 'flex-end'}]}>
-            <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/carIcon.png')}/>
-            <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
-            <Text style={styles.trackItemText}>Livraison Voiture</Text>
-          </View>
-        </View>
-        <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.06 }}>HISTORIQUE</Text>  
-        <View style={{ marginLeft: width * 0.03, marginTop: width * 0.03, paddingBottom: width * 0.03}}>
-          <View style={{ width: width * 0.02, height: history.length * width * 0.08, backgroundColor: 'white', position: 'absolute', zIndex: -1, left: width * 0.25 }}></View>
+          <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.1 }}>Ma Voiture</Text>
+          {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: width * 0.03 }}>
+            <TouchableOpacity>
+              <Image style={{ width: width * 0.35, height: width * 0.35, resizeMode: 'contain' }} source={require('../../assets/images/audiView.png')}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image style={{ width: width * 0.35, height: width * 0.35,resizeMode: 'contain', marginLeft: width * 0.04 }} source={require('../../assets/images/renaultView.png')}/>
+            </TouchableOpacity>
+          </View> */}
           <FlatList
-            data={history}
+            style={{ alignSelf: 'center' }}
+            data={cars}
+            numColumns={2}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => (
-              <View style={{ flexDirection: 'row', marginTop: index!=0 ? width * 0.05 : 0 }}>
-                <Text style={{ color: 'white' }}>{item.date}</Text>
-                <Image style={[styles.status,{position: 'absolute', left: width * 0.225}]} source={require('../../assets/images/taskEmpty.png')}/>
-                <Text style={{ color: 'white', marginLeft: width * 0.13 }}>{item.service}</Text>
-              </View>
+              <TouchableOpacity onPress={()=> this.props.navigation.navigate('MyCar', item )}>
+                <Image style={{ width: width * 0.35, height: width * 0.35,resizeMode: 'contain', marginLeft: width * 0.04 }} source={item.image}/>
+              </TouchableOpacity>
             )}
           />
-        </View>
-      </ScrollView>
+          <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.1 }}>STATUT DE VEHICULE</Text>
+          <ScrollView showsHorizontalScrollIndicator={false} style={{ marginTop: width * 0.04, }} horizontal={true}>
+          {/* <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: width * 0.03 }}> */}
+            <View style={styles.function}>
+              <Text style={{ fontFamily: 'Barlow-Regular', color: '#FFC000', fontSize: width * 0.04, marginTop: width * 0.03 }}>Moteur</Text>
+              <Image style={{ width: width * 0.15, height: width * 0.15, resizeMode: 'contain' }} source={require('../../assets/images/moteur.png')}/>
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ width: '40%', height: 3, borderRadius: width * 0.05, backgroundColor: '#FFC000',  }}></View>
+                <View style={{ width: '20%', height: 3, borderRadius: width * 0.05, backgroundColor: 'white',  }}></View>
+              </View>
+              <Text style={{ color: '#FFC000', fontFamily: 'Barlow-Regular' }}>2/5</Text>
+            </View>
+            <View style={styles.function}>
+              <Text style={{ fontFamily: 'Barlow-Regular', color: 'white', fontSize: width * 0.04, marginTop: width * 0.03 }}>Pneus</Text>  
+              <Image style={{ width: width * 0.15, height: width * 0.15,resizeMode: 'contain', }} source={require('../../assets/images/pneus.png')}/>
+            </View>
+            <View style={styles.function}>
+              <Text style={{ fontFamily: 'Barlow-Regular', color: 'white', fontSize: width * 0.04, marginTop: width * 0.03 }}>Huile</Text>  
+              <Image style={{ width: width * 0.15, height: width * 0.15,resizeMode: 'contain', }} source={require('../../assets/images/huile.png')}/>
+            </View>
+          </ScrollView>
+          <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: 'white', marginTop: width * 0.06 }}>TRACKING DU MAINTENANCE</Text>  
+          <View style={{ marginVertical: width * 0.03, backgroundColor: '', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ width: '100%', backgroundColor: 'white', height: width * 0.025, position: 'absolute', zIndex: -1, top: width * 0.1 }}></View>
+            <View style={[styles.statusContainer,{alignItems: 'flex-start'}]}>
+              <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/receivedCar.png')}/>
+              <Image style={styles.status} source={require('../../assets/images/taskComplete.png')}/>
+              <Text style={[styles.trackItemText,{color: '#FFC000'}]}>Voiture Reçu</Text>
+            </View>
+            <View style={styles.statusContainer}>
+              <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/tire.png')}/>
+              <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
+              <Text style={styles.trackItemText}>Pneus</Text>
+            </View>
+            <View style={styles.statusContainer}>
+              <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/vidange.png')}/>
+              <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
+              <Text style={styles.trackItemText}>Vidange</Text>
+            </View>
+            <View style={styles.statusContainer}>
+              <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/lavage.png')}/>
+              <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
+              <Text style={styles.trackItemText}>Lavage</Text>
+            </View>
+            <View style={[styles.statusContainer,{alignItems: 'flex-end'}]}>
+              <Image style={{ width: width * 0.07, height: width * 0.07,resizeMode: 'contain', }} source={require('../../assets/images/carIcon.png')}/>
+              <Image style={styles.status} source={require('../../assets/images/taskEmpty.png')}/>
+              <Text style={styles.trackItemText}>Livraison Voiture</Text>
+            </View>
+          </View>
+          <Text style={{ fontFamily: 'Barlow-Regular', marginLeft: width * 0.03, fontSize: width * 0.045, color: '#FFC000', marginTop: width * 0.06 }}>HISTORIQUE</Text>  
+          <View style={{ marginLeft: width * 0.03, marginTop: width * 0.03, paddingBottom: width * 0.3}}>
+            <View style={{ width: width * 0.02, height: history.length * width * 0.08, backgroundColor: 'white', position: 'absolute', zIndex: -1, left: width * 0.275, top: width * 0.01 }}></View>
+            <FlatList
+              data={history}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item, index}) => (
+                <View style={{ flexDirection: 'row', marginTop: index!=0 ? width * 0.05 : 0 }}>
+                  <Text style={{ color: 'white', fontSize: width * 0.04 }}>{item.date}</Text>
+                  <Image style={[styles.status,{position: 'absolute', left: width * 0.25}]} source={require('../../assets/images/taskEmpty.png')}/>
+                  <Text style={{ color: 'white', marginLeft: width * 0.2, fontSize: width * 0.04 }}>{item.service}</Text>
+                </View>
+              )}
+            />
+          </View>
+        </ScrollView>
+        <BottomBar/>
+      </SafeAreaView>
     );
   }
 }
@@ -169,6 +173,15 @@ const styles = StyleSheet.create({
   },
   statusContainer:{
     alignItems: 'center',
+  },
+  textLabels:{
+    fontFamily: 'Barlow-Regular', 
+    fontSize: width * 0.03,
+  },
+  image:{
+    width: width * 0.08,
+    height: width * 0.08,
+    resizeMode: 'contain',
   }
 });
 

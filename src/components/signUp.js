@@ -8,9 +8,7 @@
 
 import React,{Component} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  Image,
   View,
   Text,
   Dimensions,
@@ -33,6 +31,7 @@ class SignUp extends Component{
 
 
   render(){
+    const {isChecked} = this.state;
     return(
       <ScrollView>
         <View style={{ flex:1, alignSelf: 'center' }}>
@@ -57,6 +56,14 @@ class SignUp extends Component{
               placeholderTextColor="black"
               onChangeText={(text)=> this.setState({ vin: text }) }
             />
+            <TouchableOpacity onPress={()=> this.setState({ isChecked: !isChecked })} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'flex-start', marginTop: width * 0.04 }}>
+              <View style={{ backgroundColor: 'white', borderRadius: width * 0.05, width: width * 0.05, height: width * 0.05, borderWidth: 1, borderColor: 'black', alignItems: 'center', justifyContent: 'center'  }}>
+                {isChecked &&
+                <View style={{ backgroundColor: 'black', width: width * 0.03, height: width * 0.03, borderRadius: width * 0.03 }}></View>
+                }
+              </View>
+              <Text style={{ fontFamily: 'Barlow-Regular', fontSize: width * 0.04, marginLeft: width * 0.04 }}>Termes du Privacy</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={()=> this.props.navigation.navigate('App')} style={{ backgroundColor: '#212020', marginTop: width * 0.03 , borderRadius: width * 0.05, alignItems: 'center', justifyContent: 'center', padding: width * 0.04, paddingHorizontal: width * 0.05 }}>
               <Text style={{ color: 'white', fontSize: width * 0.04, fontFamily: 'Barlow-Regular', }}>COMMANCER</Text>
             </TouchableOpacity>
@@ -70,14 +77,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-  },
-  group:{
-    marginTop: width * 0.04,
-    alignSelf: 'center',
-    width: width * 0.8,
-    height: 400,
-    padding: width * 0.03,
-    backgroundColor: 'red',
   },
   title:{
     marginTop: width * 0.05,

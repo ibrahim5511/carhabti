@@ -2,14 +2,20 @@
   package="com.karhabti">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+      android:largeHeap="true"
       android:name=".MainApplication"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDot3qIuQ6fv4fULKKEGzSf4hnp_i6yF4E"
+      />
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

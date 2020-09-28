@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -14,6 +6,7 @@ import {
   View,
   Text,
   Dimensions,
+  Alert,
 } from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -24,10 +17,14 @@ import Home from './src/containers/home';
 import News from './src/containers/news';
 import Offres from './src/containers/offres';
 import MrBot from './src/containers/mrBot';
+import BotDetails from './src/containers/botDetails';
 import MyCar from './src/containers/myCar';
+import Stations from './src/containers/stations';
+import Rdv from './src/containers/rdv';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 
 const OnBoardStack = createStackNavigator(
   {
@@ -84,43 +81,41 @@ const BottomNavigatorStack = createBottomTabNavigator(
       }),
     },
     Autres: {
-      screen: Home,
-      navigationOptions: () => ({
+      screen: Stations,
+      navigationOptions: ({ navigation }) => ({
+        tabBarOnPress: ({ navigation }) => {
+          return(<View style={{ backgroundColor: 'red', width: 600, height: 600 }}></View>);
+          
+        },
         tabBarIcon: ({tintColor}) => (
-          <Image style={{ width: width * 0.07, height: width * 0.1, resizeMode: 'contain', }} source={require('./assets/images/autresIcon.png')} />
+          <Image style={{ width: width * 0.1, height: width * 0.1, resizeMode: 'contain', }} source={require('./assets/images/autresIcon.png')} />
         ),
-      }),
+      })
     },
   },
   {
-    initialRouteName: 'Ma Voiture',
     tabBarOptions: {
-      showLabel: true,
-      activeTintColor: 'white', // active icon color
-      inactiveTintColor: '#9F9F9F', // inactive icon color
-      tabBarPosition: 'bottom',
-      style: {
-        height: width * 0.18,
-        borderTopRightRadius: width * 0.03,
-        borderTopLeftRadius: width * 0.03,
-        backgroundColor: '#3E3E3E', // TabBar background
-      },
-    },
-  },
+      style: { display: "none", }
+    }
+  }
 );
 
 const AppStack = createStackNavigator(
   {
-    MrBot: {screen: MrBot},
-    MyCar: {screen: MyCar},
     BottomNavigator: {screen: BottomNavigatorStack},
+    MrBot: {screen: MrBot},
+    Rdv: {screen: Rdv},
+    Stations: {screen: Stations},
+    BotDetails: {screen: BotDetails},
+    MyCar: {screen: MyCar},
   },
   {
+    initialRouteName:'BottomNavigator',
+    headerMode: 'none',
     defaultNavigationOptions: {
-      headerShown: false,
+      gesturesEnabled: false,
     },
-    initialRouteName: 'BottomNavigator',
-  },
+  }
 );
 
 const AppContainer = createAppContainer(
@@ -129,7 +124,6 @@ const AppContainer = createAppContainer(
       OnBoard: OnBoardStack,
       Auth: AuthStack,
       App: AppStack,
-      //Bot: BotStack,
     },
     {
       initialRouteName: 'OnBoard',

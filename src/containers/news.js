@@ -16,9 +16,9 @@ import {
   Image,
   TouchableOpacity, 
   ScrollView,
-  FlatList,
+  TextInput,
 } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import BottomBar from '../components/bottomBar';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -33,27 +33,35 @@ class News extends Component{
   render(){
     const {history} = this.state;
     return(
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Image style={{ width: width, height: width * 0.3, resizeMode: 'contain', position: 'absolute', zIndex: -1, }} source={require('../../assets/images/headerNews.png')}/>
-          <Image style={{ width: width * 0.2, height: width * 0.2, resizeMode: 'contain', position: 'absolute', left: width * 0.03 }} source={require('../../assets/images/carhabtekWhite.png')}/>
-          <Text style={{ textAlign: 'center', width: width, color: '#9E9E9E', fontFamily: 'Barlow-Regular', }}>News</Text>
-          <Image style={{ width: width * 0.07, height: width * 0.07, position: 'absolute', right: width * 0.03, resizeMode: 'contain' }} source={require('../../assets/images/botHeader.png')}/>
-        </View>
-        <View style={{ backgroundColor: '', flexDirection: 'row', alignItems: 'center', marginLeft: width * 0.08 }}>
-          <View style={{ flexDirection: 'row', backgroundColor: 'white', opacity: 0.6, borderRadius: width * 0.06, width: width * 0.6, height: width * 0.1, alignSelf: 'center', position: 'absolute', zIndex:-1 }}></View>
-          <TextInput
-            style={styles.input}
-            placeholder="Recherche Nouveauté ... "
-            placeholderTextColor="white"
-            onChangeText={(text)=> this.setState({ vin: text }) }
-          />
-          <Image style={{ width: width * 0.1, height: width * 0.1, resizeMode: 'contain',marginLeft: width * 0.025,  }} source={require('../../assets/images/search.png')}/>
-        </View>
-        <Image style= {styles.sections} source={require('../../assets/images/news1.png')}/>
-        <Image style= {styles.sections} source={require('../../assets/images/news2.png')}/>
-        <Image style= {styles.sections}  source={require('../../assets/images/news3.png')}/>
-      </ScrollView>
+      <SafeAreaView style={{ flex:1 }}>
+        <ScrollView style={styles.container}>
+          <View style={styles.header}>
+            <Image style={{ width: width, height: width * 0.3, resizeMode: 'contain', position: 'absolute', zIndex: -1, }} source={require('../../assets/images/headerNews.png')}/>
+            <Image style={{ width: width * 0.15, height: width * 0.1 , resizeMode: 'contain', position: 'absolute', left: width * 0.03,  }} source={require('../../assets/images/carhabtekWhite.png')}/>
+            <Text style={{ textAlign: 'center', width: width, color: '#9E9E9E', fontFamily: 'Barlow-Regular',fontSize: width * 0.04 }}>News</Text>
+            <TouchableOpacity style={{ position: 'absolute', right: width * 0.03,  }} onPress={()=> this.props.navigation.navigate('MrBot')}>
+              <Image style={{ width: width * 0.07, height: width * 0.07, resizeMode: 'contain' }} source={require('../../assets/images/botHeader.png')}/>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: width * 0.08, }}>
+            <View style={{ flexDirection: 'row', backgroundColor: 'white', opacity: 0.6, borderRadius: width * 0.06, width: width * 0.6, height: width * 0.1, alignSelf: 'center', position: 'absolute', zIndex:-1 }}>
+              <Image style={{ width: width * 0.1, height: width * 0.1, resizeMode: 'contain', right: 0, position: 'absolute'   }} source={require('../../assets/images/search.png')}/>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Recherche Nouveauté ... "
+              placeholderTextColor="white"
+              onChangeText={(text)=> this.setState({ vin: text }) }
+            />
+          </View>
+          {/* <View style={{ width: width, height: 40, backgroundColor: 'red', alignSelf: 'center', bottom: 0 }}></View> */}
+          {/* <View style={{ width: width, height: 300, backgroundColor: 'red', position: 'absolute' }}></View> */}
+          <Image style= {styles.sections} source={require('../../assets/images/news1.png')}/>
+          <Image style= {styles.sections} source={require('../../assets/images/news2.png')}/>
+          <Image style= {styles.sections}  source={require('../../assets/images/news3.png')}/>
+        </ScrollView>
+        <BottomBar/>
+      </SafeAreaView>
     );
   }
 }

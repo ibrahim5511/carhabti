@@ -8,9 +8,7 @@
 
 import React,{Component} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  Image,
   View,
   Text,
   Dimensions,
@@ -64,14 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
   },
-  group:{
-    marginTop: width * 0.04,
-    alignSelf: 'center',
-    width: width * 0.8,
-    height: 400,
-    padding: width * 0.03,
-    backgroundColor: 'red',
-  },
   title:{
     marginTop: width * 0.05,
     fontSize: width * 0.05,
@@ -84,4 +74,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(Login);;
+export default withNavigation(Login);
