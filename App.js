@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  SafeAreaView,
   Image,
-  ScrollView,
   View,
-  Text,
+  LogBox,
   Dimensions,
   Alert,
 } from 'react-native';
@@ -21,6 +19,8 @@ import BotDetails from './src/containers/botDetails';
 import MyCar from './src/containers/myCar';
 import Stations from './src/containers/stations';
 import Rdv from './src/containers/rdv';
+
+LogBox.ignoreAllLogs()
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

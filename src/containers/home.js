@@ -135,6 +135,7 @@ class Home extends Component{
           </View>
         </ScrollView>
         <BottomBar/>
+    
       </SafeAreaView>
     );
   }

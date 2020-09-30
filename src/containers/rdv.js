@@ -34,7 +34,8 @@ class Rdv extends Component{
 
   reserve(date){
     const {type} = this.state;
-    //example: type: lavage
+    console.log('type', type);
+    console.log('date', date);
     //call api to reserve 
 
   }
@@ -59,7 +60,7 @@ class Rdv extends Component{
           minimumDate={new Date()}
           is24Hour={true}
           display="default"
-          onChange={(value)=>  this.reserve(value)}
+          onDateChange={(event, date)=>  this.reserve(date)}
         />
       )}
         <View style={{position: 'absolute', top: width * 0.2, flexDirection: 'row', justifyContent: 'space-around', width: width, alignItems: 'center'  }}> 

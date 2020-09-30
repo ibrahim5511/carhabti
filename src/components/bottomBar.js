@@ -17,6 +17,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import Modal from 'react-native-modal';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -46,23 +47,32 @@ class BottomBar extends Component{
           <Image style={styles.image} source={require('../../assets/images/offresIcon.png')}/>
           <Text style={[styles.textLabels, {color: '#9F9F9F'} ]}>Offres</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }} onPress={() => this.props.navigation.navigate('Stations') /*this.setState({ showModal: true })*/}>
+        <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }} onPress={() => this.setState({ showModal: true })}>
           <Image style={styles.image} source={require('../../assets/images/autresIcon.png')}/>
           <Text style={[styles.textLabels, {color: '#9F9F9F'} ]}>Autres</Text>
         </TouchableOpacity>
         {showModal &&
-        <View style={{ width: width * 0.3, height: width * 0.55, backgroundColor: 'white', borderTopRightRadius: width * 0.03, borderTopLeftRadius: width * 0.05,position: 'absolute', right: 0, zIndex: 10 }}>
-          <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }} onPress={() => Alert.alert('okkk') }>
-            <Text style={[styles.textLabels, {marginTop: width * 0.03, fontSize: width * 0.04} ]}>Les Stations</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginTop: width * 0.02 }} onPress={() => this.props.navigation.navigate('Rdv')}>
-            <Text style={[styles.textLabels, {color: '#9F9F9F', fontSize: width * 0.04} ]}>Rendez-vous</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{flexDirection: 'row' , alignItems: 'center', justifyContent: 'center', marginTop: width * 0.04 }} onPress={() => this.props.navigation.navigate('OnBoard')}>
-            <Image style={{ width: width * 0.05, height: width * 0.05, resizeMode: 'contain' }} source={require('../../assets/images/logout.png')}/>
-            <Text style={[styles.textLabels, {color: '#9F9F9F', marginLeft: width * 0.02} ]}>Se Deconnecter</Text>
-          </TouchableOpacity>
-        </View>
+          <Modal 
+            deviceWidth={width} 
+            onBackdropPress={() => this.setState({ showModal: false })} 
+            backdropOpacity={0}
+            deviceHeight={height} 
+            style={{ width: width * 0.4, height: width * 0.35, position: 'absolute', bottom: 0, right: 0, backgroundColor: 'white', margin: 0,  borderTopRightRadius: width * 0.03, borderTopLeftRadius: width * 0.03}} 
+            isVisible={showModal}
+          >
+            <View style={{ flex:1 }}>
+              <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', }} onPress={() => { this.setState({ showModal:false }); this.props.navigation.navigate('Stations')} }>
+                <Text style={[styles.textLabels, {marginTop: width * 0.03, fontSize: width * 0.04} ]}>Les Stations</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginTop: width * 0.02 }} onPress={() => { this.setState({ showModal:false });this.props.navigation.navigate('Rdv')}}>
+                <Text style={[styles.textLabels, {color: '#9F9F9F', fontSize: width * 0.04} ]}>Rendez-vous</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={{flexDirection: 'row' , alignItems: 'center', justifyContent: 'center', marginTop: width * 0.04 }} onPress={() => this.props.navigation.navigate('OnBoard')}>
+                <Image style={{ width: width * 0.05, height: width * 0.05, resizeMode: 'contain' }} source={require('../../assets/images/logout.png')}/>
+                <Text style={[styles.textLabels, {color: '#9F9F9F', marginLeft: width * 0.02} ]}>Se Deconnecter</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
         }
       </SafeAreaView>
     );

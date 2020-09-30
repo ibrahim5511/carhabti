@@ -36,7 +36,7 @@ class Offres extends Component{
     }
   }
   render(){
-    const {offres} = this.state;
+    const {offres, showModal} = this.state;
     return(
       <View style={{ flex: 1 }}>
         <ScrollView style={styles.container}>

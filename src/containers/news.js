@@ -31,7 +31,7 @@ class News extends Component{
     };
   }
   render(){
-    const {history} = this.state;
+    const {showModal} = this.state;
     return(
       <SafeAreaView style={{ flex:1 }}>
         <ScrollView style={styles.container}>

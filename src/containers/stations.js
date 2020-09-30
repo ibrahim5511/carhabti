@@ -15,10 +15,12 @@ import {
   Text,
   Image,
   TouchableOpacity, 
-  ScrollView,
-  FlatList,
+  Linking,
+   Alert
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
+import { PermissionsAndroid } from 'react-native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -37,28 +39,66 @@ class Stations extends Component{
     }
   }
 
-  componentDidMount(){
+  async requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'Location Permission',
+          'message': 'This App needs access to your location ' +
+                     'so we can know where you are.'
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Geolocation.getCurrentPosition(info => {
+          console.log(info);
+          this.setState({ coords: info.coords, ready: true })
+         //Alert.alert(JSON.stringify(info));
+        },
+        err => {
+          console.log(err);
+        },
+        { enableHighAccuracy: false, timeout: 20000, showLocationDialog: true, forceRequestLocation: true,},
+        );
+
+      } else {
+        console.log("Location permission denied")
+      }
+    } catch (err) {
+      console.warn(err)
+    }
   }
 
+  componentDidMount(){
+
+    this.requestLocationPermission();
+
+  }
+  
+
   render(){
-    const {} = this.state;
+    const {coords, ready} = this.state;
     return(
       <View style={styles.container}>
+        {ready &&
           <MapView
-            provider={Platform.OS === 'ios' ? null : PROVIDER_GOOGLE} // remove if not using Google Maps
-            style={additionalStyle.MapView}
-            region={{
-              latitude: 32.1194,
-              longitude: 20.0868,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0121,
-            }}>
-              <MapView.Marker
-                coordinate={{latitude: 100, longitude: 100}}
-              />
-              
-            
+            style={styles.map}
+  
+            region={
+              {
+                latitude:coords.latitude,
+                longitude:coords.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+              }
+            }
+            followUserLocation={true}
+            ref={ref => (this.mapView = ref)}
+            zoomEnabled={true}
+            showsUserLocation={true}
+            initialRegion={this.state.initialRegion}>
           </MapView>
+        }
       </View>
     );
   }
@@ -75,14 +115,17 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
   },
   map: {
-    width: 250,
-    height: 250,
+    width: width,
+    height: height,
   },
 });
 
 const additionalStyle = {
   icon: {paddingTop: 2, paddingLeft: 5},
-  MapView: {height: height - 200, width: '100%'},
+  MapView: {
+    width: width,
+    height: height,
+  },
 };
 
 export default Stations;
